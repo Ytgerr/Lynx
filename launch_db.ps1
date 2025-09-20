@@ -1,0 +1,1 @@
+docker run -d -p 27017:27017 --name lynx-mongodb mongodb/mongodb-community-server:7.0.7-ubi8
