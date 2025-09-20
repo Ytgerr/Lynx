@@ -97,7 +97,7 @@
 
 ## i. Data Sources
 
-- **Internal**: Student-created dataset (CSV/JSON with `title`, `text`, `date`, `source`).  
+- **Internal**: Self-created dataset (CSV/JSON with `title`, `text`, `date`, `source`).  
 - **External**: Free APIs / RSS for Russian financial news (NewsData.io, GNews.io, RBC RSS).  
 - **Data Quality Issues**: Duplicates, inconsistent entity names, varying styles.  
 - **Freshness**: Daily or weekly updates preferred; critical for finance.
