@@ -5,8 +5,6 @@
 
 import hashlib
 import os
-import re
-from asyncio import Timeout
 from sys import stdout
 
 import lxml
@@ -16,7 +14,7 @@ from loguru import logger
 from newsapi import NewsApiClient
 from pymongo import MongoClient
 from readability import Document
-from requests import ReadTimeout
+from requests.exceptions import ConnectionError, ConnectTimeout, ReadTimeout
 
 DEBUG_MODE=1
 OVERWRITE_DATABASE=1
@@ -49,6 +47,9 @@ def get_content(url):
             return None
 
     except ConnectionError:
+        logger.error(f"Site {url} doesnt responses")
+        return None
+    except ConnectTimeout:
         logger.error(f"Site {url} doesnt responses")
         return None
     except ReadTimeout:
@@ -109,6 +110,7 @@ def main():
                 filtered_articles.append({key: value for key, value in article.items() if key in CHOSEN_KEYS})
                 filtered_articles[-1]["article_id"] = article_id
                 filtered_articles[-1]["category"] = CATEGORY
+                logger.info(article_id)
 
                 if article["content"]:
                     print("=" * 80)
@@ -122,10 +124,16 @@ def main():
                     print("=" * 80)
                     if content is not None and len(content) != 0:
                         with open(f"articles/{article_id}.txt", "w", encoding="utf-8") as f:
+                            logger.trace(f"{article_id}.txt created!")
                             f.write(content)
                     else:
                         logger.error("Content is None")
+                        del filtered_articles[-1]
                         continue
+                else:
+                    logger.error("Content is None")
+                    del filtered_articles[-1]
+                    continue
             else:
                 logger.info(f"Article <{article['title']}> already present in database!")
         
