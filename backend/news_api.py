@@ -1,4 +1,10 @@
+"""
+    Module for recent news collection by using News API + Readability + Beautiful Soup 4
+    with MongoDB connected. All collected news will be in `articles/` directory
+"""
+
 import hashlib
+import os
 import re
 from asyncio import Timeout
 from sys import stdout
@@ -12,8 +18,9 @@ from pymongo import MongoClient
 from readability import Document
 from requests import ReadTimeout
 
-CONTENT_LEN_THRESH = 600
-DEBUG_MODE = 1
+DEBUG_MODE=1
+OVERWRITE_DATABASE=1
+CATEGORY="business"
 
 CHOSEN_KEYS = [
     "author",
@@ -32,6 +39,9 @@ if DEBUG_MODE == 1:
     logger.add(stdout, level="TRACE")
 
 def get_content(url):
+    """
+        Returns the content of page by it's url by using `readability` library
+    """
     try:
         response = requests.get(url, timeout=5, headers=REQUEST_HEADERS)
         if response.status_code != 200:
@@ -66,15 +76,18 @@ def get_content(url):
 
     return content
 
-hasher = hashlib.sha256()
-client = MongoClient()
-db = client["news_db"]
-news_collection = db["raw_news"]
-
-api = NewsApiClient(api_key='9c321eb916414dbcad8165d1fda83f45')
 
 def main():
-    result = api.get_top_headlines(category="business")
+    hasher = hashlib.sha256()
+    client = MongoClient()
+    db = client["news_db"]
+    news_collection = db["raw_news"]
+
+    os.makedirs("articles", exist_ok=True)
+
+    api = NewsApiClient(api_key='9c321eb916414dbcad8165d1fda83f45')
+
+    result = api.get_top_headlines(category=CATEGORY)
 
     if result["status"] == "ok":
         logger.success(f"{result['totalResults']} results recieved!")
@@ -86,9 +99,17 @@ def main():
             hasher.update(encoded_title)
             article_id = hasher.hexdigest()
 
+            if OVERWRITE_DATABASE == 1:
+                if news_collection.find_one({"article_id": article_id}) is not None:
+                    news_collection.delete_one({"article_id": article_id})
+                if os.path.exists(f"articles/{article_id}.txt"):
+                    os.remove(f"articles/{article_id}.txt")
+
             if news_collection.find_one({"article_id": article_id}) is None:
                 filtered_articles.append({key: value for key, value in article.items() if key in CHOSEN_KEYS})
                 filtered_articles[-1]["article_id"] = article_id
+                filtered_articles[-1]["category"] = CATEGORY
+
                 if article["content"]:
                     print("=" * 80)
                     for key, value in article.items():
@@ -99,7 +120,7 @@ def main():
                     content = get_content(article["url"])
 
                     print("=" * 80)
-                    if content:
+                    if content is not None and len(content) != 0:
                         with open(f"articles/{article_id}.txt", "w", encoding="utf-8") as f:
                             f.write(content)
                     else:
