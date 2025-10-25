@@ -25,21 +25,36 @@ function ThemeToggle() {
 
 export default function MainLayout() {
     const [isShrinked, setIsShrinked] = useState(false);
+    const [isAbsolute, setIsAbsolute] = useState(false);
+
+    const shrinkLayout = () => {
+        setIsShrinked(!isShrinked);
+        if (isAbsolute) {
+            setIsAbsolute(!isAbsolute);
+        } else {
+            setTimeout(() => {setIsAbsolute(!isAbsolute)}, 300);
+        }
+    }
 
     return (
         <div className="layout">
             <div>
-                <div className={"navbar" + " " + (isShrinked ? "shrinked" : undefined)}>
+                <div 
+                    className={"navbar" + " " + (isShrinked ? "shrinked" : undefined)}
+                    style={{marginBottom: isAbsolute? "-100%" : "1%"}}
+                >
                     {!isShrinked ?
                         <>
-                            <div className="links">
+                            <div 
+                                className="links"
+                            >
                                 <NavLink to="/"><img src={home_icon}/>Home Page</NavLink>
                                 <NavLink to="/history"><img src={history_icon}/>History</NavLink>
                                 <NavLink to="/profile"><img src={profile_icon}/>Profile</NavLink>
                             </div>
                             <ThemeToggle />
-                            <img onClick={() => setIsShrinked(!isShrinked)} src={isShrinked? expand_icon : shrink_icon}/>
-                        </>
+                            <img onClick={shrinkLayout} src={isShrinked? expand_icon : shrink_icon}/>
+                        </> 
                     :   
                     <>
                         <div className="links"> 
@@ -48,12 +63,13 @@ export default function MainLayout() {
                             <NavLink to="/profile"><img src={profile_icon}/></NavLink>
                         </div>
                         <ThemeToggle />
-                        <img onClick={() => setIsShrinked(!isShrinked)} src={isShrinked? expand_icon : shrink_icon}/>
+                        <img onClick={shrinkLayout} src={isShrinked? expand_icon : shrink_icon}/>
                     </>
                     }
                 </div>
+                {/* <div className={"inv-block" + " " + (isShrinked ? "shrinked" : undefined)}/> */}
             </div>
-
+            
             <main>
                 <Outlet />
             </main>

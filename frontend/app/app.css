@@ -86,23 +86,25 @@ small {font-size: 0.750rem; /* 12px */}
   --accent-950: #140a06;
 
   --s-shine: 
-  inset 0 1px 1px var(--accent-600),
-  0 1px 2px var(--accent-200),
-  0 2px 4px var(--accent-50);
+  inset 0 1px 1px var(--accent-200),
+  0 1px 2px var(--accent-600),
+  0 2px 4px var(--accent-800);
 
   --m-shine: 
-  inset 0 2px 2px var(--accent-600),
-  0 2px 3px var(--accent-200),
-  0 3px 5px var(--accent-50);
+  inset 0 2px 2px var(--accent-200),
+  0 2px 3px var(--accent-600),
+  0 3px 5px var(--accent-800);
 
   --l-shine: 
-  inset 0 3px 3px var(--accent-600),
-  0 3px 4px var(--accent-200),
-  0 4px 6px var(--accent-50);
+  inset 0 3px 3px var(--accent-200),
+  0 3px 4px var(--accent-600),
+  0 4px 6px var(--accent-800);
 
   --theme-button-clr: hsl(258, 83%, 36%);
 
   --icon-color: 0%;
+
+  --graph-background: hsl(0, 0, 95%);
 
 }
 
@@ -185,6 +187,8 @@ small {font-size: 0.750rem; /* 12px */}
   --theme-button-clr: hsl(56, 86%, 49%);
 
   --icon-color: 100%;
+
+  --graph-background: hsl(0, 0%, 90%);
 
 }
 

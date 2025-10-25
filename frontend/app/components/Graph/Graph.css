@@ -1,0 +1,18 @@
+
+.graph-container {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 1em;
+    border-radius: 1rem;
+    align-items: center;
+    font-size: 42px;
+    background-color: white;
+}
+
+.circle {
+    text-align: center;
+    color: #ffffff;
+    width: 60px;
+    height: 60px;
+    clip-path: circle(50%);
+}
