@@ -5,6 +5,7 @@ requires-python = ">=3.11"
 dependencies = [
     "en-core-web-sm",
     "fastapi>=0.117.1",
+    "natasha>=1.6.0",
     "spacy>=3.8.7",
     "uvicorn>=0.36.0",
 ]
