@@ -199,6 +199,7 @@ export function HomePage() {
     fetchData()
   }, [])
 
+<<<<<<< HEAD
   const graphBaselineData: GraphData = {
     nodes: [
       {
@@ -264,22 +265,17 @@ export function HomePage() {
   );
 >>>>>>> 1d43d30 (ForceGraph Integrated)
 =======
+=======
+>>>>>>> 6bfef5b (ForceGraph Integrated)
   if (mainGraphData) {
     return (
-      <>
+      <div className="homepage">
         <div className="rel-cards">
           <RelationalCard title="Lorem Ipsum" graphData={mainGraphData}>
             <p>Владимир Путин немного подумав, как сообщил он, купил так давно желаемую Америку</p>
           </RelationalCard>
         </div>
-      </>
-    )
-    
-  } else {
-    return(
-      <>
-        Загрузка...
-      </>
+      </div>
     )
   }
 >>>>>>> c13c213 (added integration with ml)
