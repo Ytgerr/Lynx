@@ -34,7 +34,11 @@
     align-items: center;
     background-color: var(--secondary-200);
     border-radius: 1.5em;
+<<<<<<< HEAD
     width: fit-content;
+=======
+    width: var(--navbar-width);
+>>>>>>> 1d43d30 (ForceGraph Integrated)
     box-shadow: var(--m-shine);
     background: linear-gradient(90deg, var(--low-light) 50%, var(--high-light));
 
