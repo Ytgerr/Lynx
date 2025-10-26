@@ -1,13 +1,13 @@
 import { NavLink, Outlet } from "react-router";
 import { useEffect, useState } from "react";
 
-import profile_icon from "./profile.svg"
-import home_icon from "./home.svg"
-import history_icon from "./history.svg"
-import sun_icon from "./sun.svg"
-import moon_icon from "./moon.svg"
-import shrink_icon from "./shrink.svg"
-import expand_icon from "./expand.svg"
+import profile_icon from "./assets/profile.svg"
+import home_icon from "./assets/home.svg"
+import history_icon from "./assets/history.svg"
+import sun_icon from "./assets/sun.svg"
+import moon_icon from "./assets/moon.svg"
+import shrink_icon from "./assets/shrink.svg"
+import expand_icon from "./assets/expand.svg"
 
 import "./layout.css"
 
@@ -38,11 +38,8 @@ export default function MainLayout() {
 
     return (
         <div className="layout">
-            <div>
-                <div 
-                    className={"navbar" + " " + (isShrinked ? "shrinked" : undefined)}
-                    style={{marginBottom: isAbsolute? "-100%" : "1%"}}
-                >
+            <div className="navbar-wrapper">
+                <div className={"navbar" + " " + (isShrinked ? "shrinked" : undefined)}>
                     {!isShrinked ?
                         <>
                             <div 
@@ -67,10 +64,11 @@ export default function MainLayout() {
                     </>
                     }
                 </div>
-                {/* <div className={"inv-block" + " " + (isShrinked ? "shrinked" : undefined)}/> */}
             </div>
             
-            <main>
+            <main
+                className={isAbsolute? "main-full" : "main-shifted"}
+            >
                 <Outlet />
             </main>
 

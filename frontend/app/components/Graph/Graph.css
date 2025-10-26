@@ -2,7 +2,6 @@
 .graph-container {
     display: flex;
     justify-content: space-evenly;
-    padding: 1em;
     border-radius: 1rem;
     align-items: center;
     font-size: 42px;

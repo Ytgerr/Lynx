@@ -2,15 +2,17 @@
     min-height: 100dvh;
     min-width: 100dvh;
     display: grid;
-    grid-template-rows: auto 1fr auto;
+    grid-template-rows: 1fr auto;
 }
 
-*:has(>.navbar) {
+.navbar-wrapper {
+    position: fixed;
     display: flex;
+    width: 100%;
 
     &::before {
         content: "";
-        width: 35%;
+        width: calc(50% - var(--navbar-width) / 2);
         transition: width .5s ease;
         
     }
@@ -23,7 +25,7 @@
 
 
 .navbar {
-    height: 2.5rem;
+    z-index: 0;
     display: grid;
     grid-template-columns: 1fr auto auto;
     gap: 1em;
@@ -32,9 +34,9 @@
     align-items: center;
     background-color: var(--secondary-200);
     border-radius: 1.5em;
-    width: 30%;
+    width: var(--navbar-width);
     box-shadow: var(--m-shine);
-    background: linear-gradient(90deg, var(--secondary-200) 50%, var(--secondary-300));
+    background: linear-gradient(90deg, var(--low-light) 50%, var(--high-light));
 
     &, * {
         transition: 0.25s ease-out;
@@ -65,26 +67,8 @@
 
     &.shrinked {
         width: calc-size(fit-content, size);
-        transition-property: margin-bottom;
-        transition-duration: 2s;
     }
 }
-
-
-
-.inv-block {
-    height: 0;
-
-    &.shrinked {
-        animation: InvShrink 0.25s;
-    }
-}
-
-@keyframes InvShrink {
-    from {height: 2.5rem;}
-    to {height: 0px;}
-}
-
 
 .links {
     display: flex;
@@ -117,4 +101,12 @@
 
 main {
     transition: 0.25s;
+}
+
+.main-shifted {
+    margin-top: 10rex;
+}
+
+.main-full {
+    margin-top: 0;
 }
