@@ -172,6 +172,63 @@ async def ner_eng(input_data: TextInput):
 
 @app.post("/entity-recognition_ru")
 async def ner_ru(input_data: TextInput):
+    """
+    Извлечение именованных сущностей и отношений между ними из русского текста используя Наташу для NER и rule-based RE
+    
+    Принимает:
+    input_data : TextInput
+        Объект с полем 'text', содержащий текст для анализа на русском языке.
+        
+    Возвращает:
+    JSON-объект со следующими полями:
+        results : List[Dict]
+            Список результатов анализа по каждому предложению текста. Каждый элемент содержит:
+            - sentence (str): исходное предложение
+            - entities (List[Dict]): список извлеченных сущностей с атрибутами:
+                * text (str): текст сущности
+                * type (str): тип сущности (PER, LOC, ORG и т.д.)
+                * start (int): начальная позиция в предложении
+                * stop (int): конечная позиция в предложении
+            - relations (List[Dict]): список отношений между сущностями:
+                * subject (str): субъект отношения
+                * subject_type (str): тип субъекта
+                * relation (str): глагол/действие, описывающее отношение
+                * relation_type (str): классифицированный тип отношения
+                * object (str): объект отношения
+                * object_type (str): тип объекта
+                * sentence (str): предложение, в котором найдено отношение
+    
+    Примеры использования:
+    ----------------------
+    Запрос:
+    {
+        "text": "Президент России Владимир Путин подписал указ о новых санкциях."
+    }
+    
+    Ответ:
+    {
+        "results": [
+            {
+                "sentence": "Президент России Владимир Путин подписал указ о новых санкциях.",
+                "entities": [
+                    {"text": "России", "type": "LOC", "start": 1, "stop": 2},
+                    {"text": "Владимир Путин", "type": "PER", "start": 2, "stop": 4}
+                ],
+                "relations": [
+                    {
+                        "subject": "Владимир Путин",
+                        "subject_type": "PER",
+                        "relation": "подписал",
+                        "relation_type": "POLITICAL_APPOINTMENT",
+                        "object": "России", 
+                        "object_type": "LOC",
+                        "sentence": "Президент России Владимир Путин подписал указ о новых санкциях."
+                    }
+                ]
+            }
+        ]
+    }
+    """
     extractor = WorkingRelationExtractor()
     results = extractor.extract_per_sentence(input_data.text)
     
