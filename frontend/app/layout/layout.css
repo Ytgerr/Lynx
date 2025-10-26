@@ -34,7 +34,7 @@
     align-items: center;
     background-color: var(--secondary-200);
     border-radius: 1.5em;
-    width: var(--navbar-width);
+    width: fit-content;
     box-shadow: var(--m-shine);
     background: linear-gradient(90deg, var(--low-light) 50%, var(--high-light));
 
@@ -77,6 +77,7 @@
     a {
         display: flex;
         gap: 0.5em;
+        align-items: center;
     }
 
     .active {

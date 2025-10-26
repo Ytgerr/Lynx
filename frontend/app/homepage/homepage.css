@@ -1,3 +1,7 @@
+.homepage {
+    justify-items: center;
+}
+
 .rel-cards {
     width: fit-content;
     display: grid;
@@ -5,3 +9,4 @@
     justify-items: center;
     gap: 1em;
 }
+

@@ -84,58 +84,15 @@ export function HomePage() {
     fetchData()
   }, [])
 
-  const graphBaselineData: GraphData = {
-    nodes: [
-      {
-        id: 1,
-        name: "Susanna",
-        "val": 2,
-        "color": "red"
-      },
-      {
-        "id": 2,
-        "name": "Jerry",
-        "val": 7,
-        "color": "green"
-      },
-      {
-        "id": 3,
-        "name": "Shmabulok",
-        "val": 4
-      }
-    ],
-    links: [
-      {
-        "source": 1,
-        "target": 2
-      },
-      {
-        "source": 3,
-        "target": 2
-      },
-      {
-        "source": 2,
-        "target": 2
-      }
-    ]
-  }
-
   if (mainGraphData) {
     return (
-      <>
+      <div className="homepage">
         <div className="rel-cards">
           <RelationalCard title="Lorem Ipsum" graphData={mainGraphData}>
             <p>Владимир Путин немного подумав, как сообщил он, купил так давно желаемую Америку</p>
           </RelationalCard>
         </div>
-      </>
-    )
-    
-  } else {
-    return(
-      <>
-        Загрузка...
-      </>
+      </div>
     )
   }
 }
