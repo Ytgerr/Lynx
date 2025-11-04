@@ -1,13 +1,94 @@
 import { RelationalCard } from "~/components/RelationalCard/RelationalCard";
 import type { GraphData } from "react-force-graph-2d";
 import "./homepage.css"
+import { useEffect, useState } from "react";
+
+type ML_Message = {
+  results: [
+    {
+      sentence: string,
+      entities: [{
+        text: string,
+        type: string,
+        start: number,
+        stop: number
+      }],
+      relations: [
+        {
+          subject: string,
+          subject_type: string,
+          relation: string,
+          relation_type: string,
+          object: string,
+          object_type: string,
+          sentence: string
+        },
+      ]
+    }
+  ]
+}
 
 export function HomePage() {
+
+  const [mainGraphData, setMainGraphData] = useState<GraphData>();
+
+  function reformData( data: ML_Message ) {
+    let combinedDatas: GraphData = {nodes: [], links: []};
+
+    data.results.forEach(element => {
+      element.relations.forEach((relation, index) => {
+        combinedDatas.nodes.push({
+          id: relation.object + relation.relation + index,
+          name: relation.object,
+          val: 1
+        })
+
+        combinedDatas.nodes.push({
+          id: relation.subject + relation.relation + index,
+          name: relation.subject,
+          val: 1
+        })
+
+        combinedDatas.links.push({
+          source: relation.object + relation.relation + index,
+          target: relation.subject + relation.relation + index,
+          label: relation.relation
+        })
+      })
+    });
+
+    return combinedDatas
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch("/ml/entity-recognition_ru", 
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            "text": "Владимир Путин немного подумав, как сообщил он, купил так давно желаемую Америку"
+          })
+        }
+      )
+
+      const data = await res.json()
+      const combinedDatas = reformData(data)
+      console.log(combinedDatas)
+
+      setMainGraphData(combinedDatas)
+    }
+
+    fetchData()
+  }, [])
+
   const graphBaselineData: GraphData = {
     nodes: [
       {
-        "id": 1,
-        "name": "Susanna",
+        id: 1,
+        name: "Susanna",
         "val": 2,
         "color": "red"
       },
@@ -39,30 +120,22 @@ export function HomePage() {
     ]
   }
 
-  return (
-    <>
-      <div className="rel-cards">
-        <RelationalCard title="Lorem Ipsum" graphData={graphBaselineData}>
-          <>Voluptatem similique quibusdam dolorem! Magni debitis assumenda harum tempore, non laboriosam consequatur nihil perspiciatis sit minus ut!</>
-          <p>Nulla ut deserunt recusandae consectetur exercitationem. Tempore, id tempora doloribus nostrum odit fugiat delectus accusantium repudiandae numquam sapiente quo consectetur quasi dolores error modi reprehenderit consequatur harum iusto odio maiores!</p>
-        </RelationalCard>
-        {/* <RelationalCard title="Magni debitis" graphData={graphBaselineData}>
-          <>Consequatur nihil perspiciatis sit minus ut!</>
-          <p>Nulla ut deserunt recusandae consectetur exercitationem. Tempore, id tempora doloribus nostrum odit fugiat delectus accusantium repudiandae numquam sapiente quo consectetur quasi dolores error modi reprehenderit consequatur harum iusto odio maiores!</p>
-        </RelationalCard>
-        <RelationalCard title="Tempore" graphData={graphBaselineData}>
-          <>Sit amet consectetur adipisicing elit. Magni ratione totam aliquam saepe. Voluptatem similique quibusdam dolorem! Magni debitis assumenda harum tempore, non laboriosam consequatur nihil perspiciatis sit minus ut!</>
-          <p>Nulla ut deserunt recusandae consectetur exercitationem. Tempore, id tempora doloribus nostrum odit fugiat delectus accusantium repudiandae numquam sapiente quo consectetur quasi dolores error modi reprehenderit consequatur harum iusto odio maiores!</p>
-        </RelationalCard>
-        <RelationalCard title="Lorem Ipsum" graphData={graphBaselineData}>
-          <>Aliquam saepe. Voluptatem similique quibusdam dolorem! Magni debitis assumenda harum tempore, non laboriosam consequatur nihil perspiciatis sit minus ut!</>
-          <p>Nulla ut deserunt recusandae consectetur exercitationem. Tempore, id tempora doloribus nostrum odit fugiat delectus accusantium repudiandae numquam sapiente quo consectetur quasi dolores error modi reprehenderit consequatur harum iusto odio maiores!</p>
-        </RelationalCard>
-        <RelationalCard title="Nulla ut deserunt" graphData={graphBaselineData}>
-          <>Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni ratione totam aliquam saepe. Voluptatem similique quibusdam dolorem! Magni debitis assumenda harum tempore, non laboriosam consequatur nihil perspiciatis sit minus ut!</>
-          <p>Nulla ut deserunt recusandae consectetur exercitationem. Tempore, id tempora doloribus nostrum odit fugiat delectus accusantium repudiandae numquam sapiente quo consectetur quasi dolores error modi reprehenderit consequatur harum iusto odio maiores!</p>
-        </RelationalCard> */}
-      </div>
-    </>
-  );
+  if (mainGraphData) {
+    return (
+      <>
+        <div className="rel-cards">
+          <RelationalCard title="Lorem Ipsum" graphData={mainGraphData}>
+            <p>Владимир Путин немного подумав, как сообщил он, купил так давно желаемую Америку</p>
+          </RelationalCard>
+        </div>
+      </>
+    )
+    
+  } else {
+    return(
+      <>
+        Загрузка...
+      </>
+    )
+  }
 }
