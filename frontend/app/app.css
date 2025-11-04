@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css?family=Bree%20Serif:700|Bree%20Serif:400');
+
+:root[data-theme="light"] {
+  --text-50: #f6f1ef;
+  --text-100: #ede2de;
+  --text-200: #dac6be;
+  --text-300: #c8a99d;
+  --text-400: #b68d7c;
+  --text-500: #a3705c;
+  --text-600: #835a49;
+  --text-700: #624337;
+  --text-800: #412d25;
+  --text-900: #211612;
+  --text-950: #100b09;
+
+  --background-50: #f6f1ee;
+  --background-100: #eee3dd;
+  --background-200: #ddc6bb;
+  --background-300: #ccaa99;
+  --background-400: #bb8e77;
+  --background-500: #aa7155;
+  --background-600: #885b44;
+  --background-700: #664433;
+  --background-800: #442d22;
+  --background-900: #221711;
+  --background-950: #110b09;
+
+  --primary-50: #f8f0ed;
+  --primary-100: #f0e1db;
+  --primary-200: #e1c3b7;
+  --primary-300: #d3a692;
+  --primary-400: #c4886e;
+  --primary-500: #b56a4a;
+  --primary-600: #91553b;
+  --primary-700: #6d402c;
+  --primary-800: #482a1e;
+  --primary-900: #24150f;
+  --primary-950: #120b07;
+
+  --secondary-50: #f8f0ec;
+  --secondary-100: #f2e0d9;
+  --secondary-200: #e5c1b3;
+  --secondary-300: #d8a28d;
+  --secondary-400: #cb8367;
+  --secondary-500: #be6441;
+  --secondary-600: #985034;
+  --secondary-700: #723c27;
+  --secondary-800: #4c281a;
+  --secondary-900: #26140d;
+  --secondary-950: #130a07;
+
+  --accent-50: #f9efeb;
+  --accent-100: #f4dfd7;
+  --accent-200: #e9c0af;
+  --accent-300: #dda088;
+  --accent-400: #d28060;
+  --accent-500: #c76138;
+  --accent-600: #9f4d2d;
+  --accent-700: #773a22;
+  --accent-800: #502716;
+  --accent-900: #28130b;
+  --accent-950: #140a06;
+
+  --high-light: var(--secondary-300);
+  --low-light: var(--secondary-400);
+
+  --s-shine: 
+  inset 0 1px 1px var(--accent-50),
+  0 1px 2px var(--accent-800),
+  0 2px 4px var(--accent-950);
+
+  --m-shine: 
+  inset 0 2px 2px var(--accent-50),
+  0 2px 3px var(--accent-800),
+  0 3px 5px var(--accent-950);
+
+  --l-shine: 
+  inset 0 3px 3px var(--accent-50),
+  0 3px 4px var(--accent-800),
+  0 4px 6px var(--accent-950);
+
+  --theme-button-clr: hsl(258, 83%, 36%);
+
+  --icon-color: 0%;
+
+  --graph-background: hsl(0, 0, 95%);
+
+}
+
+:root[data-theme="dark"] {
+  --text-50: #100b09;
+  --text-100: #211612;
+  --text-200: #422c24;
+  --text-300: #634136;
+  --text-400: #845748;
+  --text-500: #a46d5b;
+  --text-600: #b78a7b;
+  --text-700: #c9a79c;
+  --text-800: #dbc5bd;
+  --text-900: #ede2de;
+  --text-950: #f6f0ef;
+
+  --background-50: #110b08;
+  --background-100: #221711;
+  --background-200: #452d21;
+  --background-300: #674432;
+  --background-400: #8a5a42;
+  --background-500: #ac7153;
+  --background-600: #bd8d75;
+  --background-700: #cdaa98;
+  --background-800: #dec6ba;
+  --background-900: #eee3dd;
+  --background-950: #f7f1ee;
+
+  --primary-50: #120b07;
+  --primary-100: #24150f;
+  --primary-200: #482a1e;
+  --primary-300: #6d402c;
+  --primary-400: #91553b;
+  --primary-500: #b56a4a;
+  --primary-600: #c4886e;
+  --primary-700: #d3a692;
+  --primary-800: #e1c3b7;
+  --primary-900: #f0e1db;
+  --primary-950: #f8f0ed;
+
+  --secondary-50: #130a07;
+  --secondary-100: #26140d;
+  --secondary-200: #4c281a;
+  --secondary-300: #723c27;
+  --secondary-400: #985034;
+  --secondary-500: #be6441;
+  --secondary-600: #cb8367;
+  --secondary-700: #d8a28d;
+  --secondary-800: #e5c1b3;
+  --secondary-900: #f2e0d9;
+  --secondary-950: #f8f0ec;
+
+  --accent-50: #140a06;
+  --accent-100: #28130b;
+  --accent-200: #502716;
+  --accent-300: #773a22;
+  --accent-400: #9f4d2d;
+  --accent-500: #c76138;
+  --accent-600: #d28060;
+  --accent-700: #dda088;
+  --accent-800: #e9c0af;
+  --accent-900: #f4dfd7;
+  --accent-950: #f9efeb;
+
+  --high-light: var(--secondary-400);
+  --low-light: var(--secondary-300);
+
+  --s-shine: 
+  inset 0 1px 1px var(--accent-950),
+  0 1px 2px var(--accent-100),
+  0 2px 4px var(--accent-50);
+
+  --m-shine: 
+  inset 0 2px 2px var(--accent-950),
+  0 2px 3px var(--accent-100),
+  0 3px 5px var(--accent-50);
+
+  --l-shine: 
+  inset 0 3px 3px var(--accent-950),
+  0 3px 4px var(--accent-100),
+  0 4px 6px var(--accent-50);
+
+  --theme-button-clr: hsl(56, 86%, 49%);
+
+  --icon-color: 100%;
+
+  --graph-background: hsl(0, 0%, 90%);
+
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+  --navbar-width: 25%;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Bree Serif';
+  font-weight: 700;
+}
+
+html {font-size: 100%;} /* 16px */
+
+h1 {font-size: 4.210rem; /* 67.36px */}
+
+h2 {font-size: 3.158rem; /* 50.56px */}
+
+h3 {font-size: 2.369rem; /* 37.92px */}
+
+h4 {font-size: 1.777rem; /* 28.48px */}
+
+h5 {font-size: 1.333rem; /* 21.28px */}
+
+small {font-size: 0.750rem; /* 12px */}
+
+body {
+  min-height: 100dvh;
+  min-width: 100dvh;
+
+  font-family: 'Bree Serif';
+  font-weight: 400;
+
+  background-color: var(--background-100);
+}
