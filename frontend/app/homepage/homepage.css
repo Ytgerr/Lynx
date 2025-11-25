@@ -10,7 +10,6 @@
     gap: 1em;
 }
 
-<<<<<<< HEAD
 .logo-and-desc {
     width: 50%;
     background-color: var(--secondary-400);
@@ -46,5 +45,3 @@
     border-bottom: 2px dashed var(--text-700);
     width: 100%;
 }
-=======
->>>>>>> 6bfef5b (ForceGraph Integrated)
