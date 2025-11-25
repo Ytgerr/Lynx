@@ -23,9 +23,6 @@ function Graph({ graphData }: ForceGraphProps) {
                     width={500}
                     height={150}
 <<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> c13c213 (added integration with ml)
                     linkThreeObjectExtend={true}
                     linkCanvasObjectMode={(() => 'after')}
                     linkCanvasObject={(link: {source: string, target: string, label: string}, ctx: any) => {
@@ -74,11 +71,8 @@ function Graph({ graphData }: ForceGraphProps) {
                         ctx.fillText(label, 0, 0);
                         ctx.restore()
                     }}
-<<<<<<< HEAD
 =======
 >>>>>>> 1d43d30 (ForceGraph Integrated)
-=======
->>>>>>> c13c213 (added integration with ml)
                 />
             </div>
         );
