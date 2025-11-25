@@ -92,6 +92,7 @@ export function HomePage() {
   useEffect(() => {
     const fetchData = async (text_query: string) => {
       console.log(text_query)
+<<<<<<< HEAD
       const res = await fetch("/ml/entity-recognition_ru", 
         {
           method: "POST",
@@ -177,6 +178,8 @@ export function HomePage() {
 
   useEffect(() => {
     const fetchData = async () => {
+=======
+>>>>>>> 9974459 (homepage decorating)
       const res = await fetch("/ml/entity-recognition_ru", 
         {
           method: "POST",
@@ -184,7 +187,7 @@ export function HomePage() {
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            "text": "Владимир Путин немного подумав, как сообщил он, купил так давно желаемую Америку"
+            "text": text_query
           })
         }
       )
@@ -196,9 +199,10 @@ export function HomePage() {
       setMainGraphData(combinedDatas)
     }
 
-    fetchData()
+    fetchData("Владимир Путин немного подумав, как сообщил он, купил так давно желаемую Америку")
   }, [])
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   const graphBaselineData: GraphData = {
     nodes: [
@@ -279,4 +283,34 @@ export function HomePage() {
     )
   }
 >>>>>>> c13c213 (added integration with ml)
+=======
+  return (
+    <div className="homepage">
+      <div className="logo-and-desc">
+        <div className="logo">
+          Lynx
+        </div>
+
+        <div className="desc">
+          Transform dense articles into intuitive knowledge graphs, instantly revealing the hidden connections between people, companies, and ideas. Unlock deeper insights and spot critical relationships at a glance, turning complex information into a clear, actionable visual map.
+        </div>
+      </div>
+      <div className="rel-cards">
+        <span className="subtitle">
+          Example:
+        </span>
+        {mainGraphData? 
+        <RelationalCard title="Lorem Ipsum" graphData={mainGraphData}>
+          <p>Владимир Путин немного подумав, как сообщил он, купил так давно желаемую Америку</p>
+        </RelationalCard>
+        :
+        <></>}
+        <span className="subtitle">
+          Make your own relation graphs!
+        </span>
+        
+      </div>
+    </div>
+  )
+>>>>>>> 9974459 (homepage decorating)
 }

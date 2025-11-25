@@ -11,6 +11,9 @@
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 9974459 (homepage decorating)
 .logo-and-desc {
     width: 50%;
     background-color: var(--secondary-400);
@@ -45,6 +48,10 @@
     justify-self: flex-start;
     border-bottom: 2px dashed var(--text-700);
     width: 100%;
+<<<<<<< HEAD
 }
 =======
 >>>>>>> 6bfef5b (ForceGraph Integrated)
+=======
+}
+>>>>>>> 9974459 (homepage decorating)
