@@ -3,10 +3,45 @@
 }
 
 .rel-cards {
-    width: fit-content;
+    min-width: 70%;
     display: grid;
     
     justify-items: center;
     gap: 1em;
 }
 
+.logo-and-desc {
+    width: 50%;
+    background-color: var(--secondary-400);
+    padding: 1em;
+    border-radius: 1em;
+    border: 1px solid var(--primary-600);
+    margin: 1em;
+    
+    text-align: center;
+    display: grid;
+    gap: 0.5em;
+
+    .logo {
+        color: var(--text-900);
+        font-family: 'Bree Serif';
+        font-weight: 700;
+        font-size: 5em;
+    }
+
+    .desc {
+        background-color: var(--secondary-300);
+        padding: 1em;
+        border-radius: 1em;
+        border: 1px solid var(--primary-500);
+        color: var(--text-700)
+    }
+}
+
+.subtitle {
+    color: var(--text-700);
+    font-size: 2.5em;
+    justify-self: flex-start;
+    border-bottom: 2px dashed var(--text-700);
+    width: 100%;
+}
