@@ -45,3 +45,28 @@
     border-bottom: 2px dashed var(--text-700);
     width: 100%;
 }
+
+.add-container {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    max-width: 80%;
+    width: 80%;
+    background-color: var(--secondary-300);
+    padding: 1em;
+    border: none;
+    border-radius: 1em;
+    gap: 1em;
+    box-shadow: var(--s-shine);
+    background: linear-gradient(var(--high-light), var(--low-light));
+}
+
+.user-phrase-input {
+    font-family: 'Bree Serif';
+    font-weight: 400;
+    background-color: var(--secondary-100);
+    color: var(--text-800);
+    height: 9.5em;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--text-600) var(--primary-100);
+}

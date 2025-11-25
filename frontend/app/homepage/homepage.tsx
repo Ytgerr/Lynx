@@ -31,6 +31,8 @@ type ML_Message = {
 export function HomePage() {
 
   const [mainGraphData, setMainGraphData] = useState<GraphData>();
+  const [userGraphsData, setUserGraphsData] = useState<{graphData: GraphData, text: string}[]>([]);
+  const [inputValue, setInputValue] = useState<string>();
 
   function reformData( data: ML_Message ) {
     let combinedDatas: GraphData = {nodes: [], links: []};
@@ -60,29 +62,32 @@ export function HomePage() {
     return combinedDatas
   }
 
+  const fetchData = async (text_query: string) => {
+    console.log(text_query)
+    const res = await fetch("/ml/entity-recognition_ru", 
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          "text": text_query
+        })
+      }
+    )
+
+    const data = await res.json()
+    const combinedDatas = reformData(data)
+    console.log(combinedDatas)
+
+    return combinedDatas
+  }
+
   useEffect(() => {
-    const fetchData = async (text_query: string) => {
-      console.log(text_query)
-      const res = await fetch("/ml/entity-recognition_ru", 
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            "text": text_query
-          })
-        }
-      )
-
-      const data = await res.json()
-      const combinedDatas = reformData(data)
-      console.log(combinedDatas)
-
-      setMainGraphData(combinedDatas)
-    }
-
-    fetchData("Владимир Путин немного подумав, как сообщил он, купил так давно желаемую Америку")
+    (async () => {
+      setMainGraphData(await fetchData("Владимир Путин немного подумав, как сообщил он, купил так давно желаемую Америку"))
+    })();
+    
   }, [])
 
   return (
@@ -109,7 +114,19 @@ export function HomePage() {
         <span className="subtitle">
           Make your own relation graphs!
         </span>
-        
+        {userGraphsData.map((item, index) => {
+          return <RelationalCard key={index} title="Lorem Ipsum" graphData={item.graphData}><p>{item.text}</p></RelationalCard>
+        })}
+        <div className="add-container">
+          <textarea className="user-phrase-input" value={inputValue} onChange={e => {setInputValue(e.target.value)}}/>
+          <button onClick={async () => {
+            if (inputValue) {
+              const result = await fetchData(inputValue);
+              setUserGraphsData(prev => [...prev, {graphData:result, text:inputValue}]);
+              setInputValue("")
+            }
+          }}>ReGraph!</button>
+        </div>
       </div>
     </div>
   )
