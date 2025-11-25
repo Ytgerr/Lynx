@@ -17,16 +17,11 @@
     "react-force-graph": "^1.48.1",
     "react-force-graph-2d": "^1.29.0",
 <<<<<<< HEAD
-<<<<<<< HEAD
     "react-router": "^7.9.2",
     "three-spritetext": "^1.10.0"
 =======
     "react-router": "^7.9.2"
 >>>>>>> 1d43d30 (ForceGraph Integrated)
-=======
-    "react-router": "^7.9.2",
-    "three-spritetext": "^1.10.0"
->>>>>>> c13c213 (added integration with ml)
   },
   "devDependencies": {
     "@react-router/dev": "^7.9.2",
