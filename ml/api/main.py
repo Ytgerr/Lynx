@@ -6,16 +6,116 @@ from natasha import (
     Segmenter, NewsEmbedding, NewsNERTagger, 
     NewsMorphTagger, NewsSyntaxParser, Doc
 )
+from transformers import AutoTokenizer, AutoModelForTokenClassification, AutoModelForSequenceClassification, pipeline
+
 
 app = FastAPI()
 
-model = spacy.load("en_core_web_sm")
+# Load Spacy for sentence splitting
+try:
+    model = spacy.load("en_core_web_sm")
+except OSError:
+    print("Downloading en_core_web_sm...")
+    from spacy.cli import download
+    download("en_core_web_sm")
+    model = spacy.load("en_core_web_sm")
+
+# Load English Models
+# Assuming models are in ../models relative to this file if running from api directory,
+# or ./models if running from ml directory.
+# Based on dockerfile, WORKDIR is /src (which is ml/), so models are at ./models
+NER_MODEL_PATH = "models/ner_model"
+RE_MODEL_PATH = "models/re_model"
+
+print(f"Loading models from {NER_MODEL_PATH} and {RE_MODEL_PATH}...")
+
+try:
+    ner_tokenizer = AutoTokenizer.from_pretrained(NER_MODEL_PATH)
+    ner_model = AutoModelForTokenClassification.from_pretrained(NER_MODEL_PATH)
+    ner_pipeline = pipeline("ner", model=ner_model, tokenizer=ner_tokenizer, aggregation_strategy="simple")
+    
+    re_tokenizer = AutoTokenizer.from_pretrained(RE_MODEL_PATH)
+    re_model = AutoModelForSequenceClassification.from_pretrained(RE_MODEL_PATH)
+    re_pipeline = pipeline("text-classification", model=re_model, tokenizer=re_tokenizer)
+    print("English models loaded successfully.")
+except Exception as e:
+    print(f"Error loading English models: {e}")
+    ner_pipeline = None
+    re_pipeline = None
 
 segmenter = Segmenter()
 emb = NewsEmbedding()
 ner_tagger = NewsNERTagger(emb)
 morph_tagger = NewsMorphTagger(emb)
 syntax_parser = NewsSyntaxParser(emb)
+
+class EnglishRelationExtractor:
+    def __init__(self):
+        self.nlp = model 
+        self.ner = ner_pipeline
+        self.re = re_pipeline
+        
+    def extract_per_sentence(self, text):
+        if not self.ner or not self.re:
+            return [{"error": "Models not loaded"}]
+            
+        doc = self.nlp(text)
+        results = []
+        
+        for sent in doc.sents:
+            sent_text = sent.text
+            ner_results = self.ner(sent_text)
+            
+            entities = []
+            for ent in ner_results:
+                entities.append({
+                    "text": ent["word"],
+                    "type": ent["entity_group"],
+                    "start": ent["start"],
+                    "stop": ent["end"]
+                })
+            
+            relations = []
+            if len(entities) >= 2:
+                for i in range(len(entities)):
+                    for j in range(len(entities)):
+                        if i == j:
+                            continue
+                        
+                        ent1 = entities[i]
+                        ent2 = entities[j]
+                        
+                        sep = re_tokenizer.sep_token
+                        input_text = f"{ent1['text']} {sep} {ent2['text']} {sep} {sent_text}"
+                        
+                        # Truncate if too long (simple check, tokenizer handles truncation usually but good to be safe)
+                        if len(input_text) > 512:
+                             input_text = input_text[:512]
+
+                        try:
+                            re_result = self.re(input_text)[0]
+                            
+                            if re_result['label'] != 'no_relation':
+                                relations.append({
+                                    'subject': ent1['text'],
+                                    'subject_type': ent1['type'],
+                                    'relation': re_result['label'],
+                                    'relation_type': re_result['label'],
+                                    'object': ent2['text'],
+                                    'object_type': ent2['type'],
+                                    'sentence': sent_text,
+                                    'score': re_result['score']
+                                })
+                        except Exception as e:
+                            print(f"Error in RE prediction: {e}")
+            
+            results.append({
+                "sentence": sent_text,
+                "entities": entities,
+                "relations": relations
+            })
+            
+        return results
 
 class WorkingRelationExtractor:
     def __init__(self):
@@ -166,9 +266,66 @@ class TextInput(BaseModel):
 
 @app.post("/entity-recognition_eng")
 async def ner_eng(input_data: TextInput):
-    doc = model(input_data.text)
-    triplets = [{"text": ent.text, "label": ent.label_, "start": ent.start_char, "end": ent.end_char} for ent in doc.ents]
-    return {"triplets": triplets}
+    """
+    Extract named entities and relations from English text using pre-trained BERT models.
+    
+    Args:
+        input_data (TextInput): Object containing the 'text' field with English text to analyze.
+        
+    Returns:
+        dict: JSON object with the following fields:
+            results (List[Dict]): List of analysis results for each sentence. Each element contains:
+                - sentence (str): Original sentence text.
+                - entities (List[Dict]): List of extracted entities with attributes:
+                    * text (str): Entity text.
+                    * type (str): Entity type (e.g., PER, ORG, LOC).
+                    * start (int): Start position in the sentence.
+                    * stop (int): End position in the sentence.
+                - relations (List[Dict]): List of relations between entities:
+                    * subject (str): Subject of the relation.
+                    * subject_type (str): Type of the subject entity.
+                    * relation (str): Relation label (e.g., founded_by, ceo_of).
+                    * relation_type (str): Same as relation label.
+                    * object (str): Object of the relation.
+                    * object_type (str): Type of the object entity.
+                    * sentence (str): Sentence where the relation was found.
+                    * score (float): Confidence score of the relation prediction.
+    
+    Example:
+    --------
+    Request:
+    {
+        "text": "Steve Jobs founded Apple in 1976."
+    }
+    
+    Response:
+    {
+        "results": [
+            {
+                "sentence": "Steve Jobs founded Apple in 1976.",
+                "entities": [
+                    {"text": "Steve Jobs", "type": "PER", "start": 0, "stop": 10},
+                    {"text": "Apple", "type": "ORG", "start": 19, "stop": 24}
+                ],
+                "relations": [
+                    {
+                        "subject": "Steve Jobs",
+                        "subject_type": "PER",
+                        "relation": "founded",
+                        "relation_type": "founded",
+                        "object": "Apple",
+                        "object_type": "ORG",
+                        "sentence": "Steve Jobs founded Apple in 1976.",
+                        "score": 0.98
+                    }
+                ]
+            }
+        ]
+    }
+    """
+    extractor = EnglishRelationExtractor()
+    results = extractor.extract_per_sentence(input_data.text)
+    return {"results": results}
 
 @app.post("/entity-recognition_ru")
 async def ner_ru(input_data: TextInput):

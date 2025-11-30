@@ -1,0 +1,35 @@
+services:
+  mongodb:
+    image: mongodb/mongodb-community-server:7.0.7-ubi8
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  backend:
+    build: ./backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongodb
+    environment:
+      - MONGODB_URL=mongodb://mongodb:27017
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+
+  ml:
+    build: ./ml
+    ports:
+      - "8001:8000"
+    depends_on:
+      - mongodb
+    environment:
+      - MONGODB_URL=mongodb://mongodb:27017
+
+volumes:
+  mongo_data:

@@ -6,7 +6,9 @@ from pymongo import MongoClient
 
 app = FastAPI()
 
-client = MongoClient()
+import os
+
+client = MongoClient(os.getenv("MONGODB_URL", "mongodb://localhost:27017"))
 db = client["news_db"]
 news_collection = db["raw_news"]
 
@@ -55,4 +57,3 @@ async def get_articles(
 
 if __name__ == "__main__":
     main()
-
