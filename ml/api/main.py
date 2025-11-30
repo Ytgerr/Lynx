@@ -7,7 +7,11 @@ from natasha import (
     NewsMorphTagger, NewsSyntaxParser, Doc
 )
 from transformers import AutoTokenizer, AutoModelForTokenClassification, AutoModelForSequenceClassification, pipeline
+from pathlib import Path
 
+BASE = Path(__file__).resolve().parent.parent 
+NER_MODEL_PATH = str(BASE / "models" / "ner_model")
+RE_MODEL_PATH = str(BASE / "models" / "re_model")
 
 app = FastAPI()
 
@@ -24,8 +28,7 @@ except OSError:
 # Assuming models are in ../models relative to this file if running from api directory,
 # or ./models if running from ml directory.
 # Based on dockerfile, WORKDIR is /src (which is ml/), so models are at ./models
-NER_MODEL_PATH = "models/ner_model"
-RE_MODEL_PATH = "models/re_model"
+
 
 print(f"Loading models from {NER_MODEL_PATH} and {RE_MODEL_PATH}...")
 
