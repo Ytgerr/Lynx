@@ -65,7 +65,7 @@ export function HomePage() {
 
   const fetchData = async (text_query: string) => {
     console.log(text_query)
-    const res = await fetch("/ml/entity-recognition_ru", 
+    const res = await fetch(`/ml/entity-recognition_${language}`, 
       {
         method: "POST",
         headers: {
