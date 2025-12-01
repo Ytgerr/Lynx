@@ -78,6 +78,7 @@ export function HomePage() {
     )
 
     const data = await res.json()
+    console.log(data)
     const combinedDatas = reformData(data)
     console.log(combinedDatas)
 

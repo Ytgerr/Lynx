@@ -8,7 +8,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/ml': {
-        target: 'http://localhost:8000',
+        target: 'http://localhost:8001',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/ml/, ''),
       },
