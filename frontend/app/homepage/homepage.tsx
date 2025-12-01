@@ -33,6 +33,7 @@ export function HomePage() {
   const [mainGraphData, setMainGraphData] = useState<GraphData>();
   const [userGraphsData, setUserGraphsData] = useState<{graphData: GraphData, text: string}[]>([]);
   const [inputValue, setInputValue] = useState<string>();
+  const [language, setLanguage] = useState<string>("ru");
 
   function reformData( data: ML_Message ) {
     let combinedDatas: GraphData = {nodes: [], links: []};
@@ -117,15 +118,33 @@ export function HomePage() {
         {userGraphsData.map((item, index) => {
           return <RelationalCard key={index} title="Lorem Ipsum" graphData={item.graphData}><p>{item.text}</p></RelationalCard>
         })}
+        
         <div className="add-container">
           <textarea className="user-phrase-input" value={inputValue} onChange={e => {setInputValue(e.target.value)}}/>
-          <button onClick={async () => {
-            if (inputValue) {
-              const result = await fetchData(inputValue);
-              setUserGraphsData(prev => [...prev, {graphData:result, text:inputValue}]);
-              setInputValue("")
-            }
-          }}>ReGraph!</button>
+          <div className="buttons-block">
+
+            <div className="language-choice">
+              Language: 
+              <span className="lang-dropdown">
+                <span>{language}</span>
+                <div className="lang-dropdown-choices">
+                  <div onClick={() => setLanguage("ru")}>ru</div>
+                  <div onClick={() => setLanguage("eng")}>eng</div>
+                </div>
+              </span>
+            </div>
+
+            <button onClick={async () => {
+              if (inputValue) {
+                const result = await fetchData(inputValue);
+                setUserGraphsData(prev => [...prev, {graphData:result, text:inputValue}]);
+                setInputValue("")
+              }
+            }}>ReGraph!</button>
+
+            
+          </div>
+          
         </div>
       </div>
     </div>

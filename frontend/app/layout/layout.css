@@ -12,7 +12,7 @@
 
     &::before {
         content: "";
-        width: calc(50% - var(--navbar-width) / 2);
+        width: calc(50dvw - var(--navbar-width) / 2 - 1.5em);
         transition: width .5s ease;
         
     }
@@ -34,7 +34,7 @@
     align-items: center;
     background-color: var(--secondary-200);
     border-radius: 1.5em;
-    width: fit-content;
+    width: var(--navbar-width);
     box-shadow: var(--m-shine);
     background: linear-gradient(90deg, var(--low-light) 50%, var(--high-light));
 
@@ -66,7 +66,7 @@
     }
 
     &.shrinked {
-        width: calc-size(fit-content, size);
+        width: fit-content;
     }
 }
 
@@ -102,10 +102,12 @@
 
 main {
     transition: 0.25s;
+    display: flex;
+    flex-direction: column;
 }
 
 .main-shifted {
-    margin-top: 10rex;
+    margin-top: 10ex;
 }
 
 .main-full {
