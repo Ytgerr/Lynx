@@ -101,7 +101,6 @@
 }
 
 footer {
-    margin-top: 1em;
     padding: 1em;
     text-align: center;
     background-color: var(--sec-2);
@@ -113,6 +112,10 @@ main {
     transition: 0.25s;
     display: flex;
     flex-direction: column;
+    background-image: url("linx-removebg-preview.png");
+    background-position: left bottom;
+    background-repeat: no-repeat;
+    background-attachment: local;
 }
 
 .main-shifted {
