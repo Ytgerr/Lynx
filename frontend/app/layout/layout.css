@@ -32,11 +32,11 @@
     padding: 0.75em 1.5em;
     margin: 1em;
     align-items: center;
-    background-color: var(--secondary-200);
+    background-color: var(--sec-2);
     border-radius: 1.5em;
     width: var(--navbar-width);
     box-shadow: var(--m-shine);
-    background: linear-gradient(90deg, var(--low-light) 50%, var(--high-light));
+    background: linear-gradient(90deg, var(--prim-1) 50%, var(--prim-3));
 
     &, * {
         transition: 0.25s ease-out;
@@ -62,7 +62,7 @@
     }
 
     * {
-        color: var(--text-700);
+        color: var(--text-subsec);
     }
 
     &.shrinked {
@@ -81,13 +81,13 @@
     }
 
     .active {
-        background-color: var(--primary-400);
+        background-color: var(--acc-1);
         box-shadow: var(--l-shine);
         
     }
 
     > :hover {
-        background-color: var(--primary-400);
+        background-color: var(--prim-3);
     }
 
     > * {
@@ -95,9 +95,18 @@
         border-radius: 0.25em;
         text-decoration: none;
         box-shadow: var(--s-shine);
-        background-color: var(--secondary-300);
+        background-color: var(--sec-3);
     }
     
+}
+
+footer {
+    margin-top: 1em;
+    padding: 1em;
+    text-align: center;
+    background-color: var(--sec-2);
+    color: var(--text-subsec);
+    box-shadow: var(--m-shine);
 }
 
 main {

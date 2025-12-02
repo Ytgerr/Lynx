@@ -2,6 +2,7 @@ import { RelationalCard } from "~/components/RelationalCard/RelationalCard";
 import type { GraphData } from "react-force-graph-2d";
 import "./homepage.css"
 import { useEffect, useState } from "react";
+import { useCardsHistoryContext } from "~/contexts/CardsHistoryContext";
 
 type ML_Message = {
   results: [
@@ -34,6 +35,9 @@ export function HomePage() {
   const [userGraphsData, setUserGraphsData] = useState<{graphData: GraphData, text: string}[]>([]);
   const [inputValue, setInputValue] = useState<string>();
   const [language, setLanguage] = useState<string>("ru");
+
+  const {cardsHistory, saveCard} = useCardsHistoryContext();
+  
 
   function reformData( data: ML_Message ) {
     let combinedDatas: GraphData = {nodes: [], links: []};
@@ -108,8 +112,8 @@ export function HomePage() {
           Example:
         </span>
         {mainGraphData? 
-        <RelationalCard title="Lorem Ipsum" graphData={mainGraphData}>
-          <p>Владимир Путин немного подумав, как сообщил он, купил так давно желаемую Америку</p>
+        <RelationalCard title="Владимир Путин" graphData={mainGraphData}
+        text={"Владимир Путин немного подумав, как сообщил он, купил так давно желаемую Америку"}>
         </RelationalCard>
         :
         <></>}
@@ -117,7 +121,11 @@ export function HomePage() {
           Make your own relation graphs!
         </span>
         {userGraphsData.map((item, index) => {
-          return <RelationalCard key={index} title="Lorem Ipsum" graphData={item.graphData}><p>{item.text}</p></RelationalCard>
+          return (
+            <RelationalCard key={index} title={item.text.split(' ').slice(0, 2).join(' ')} graphData={item.graphData} saveCard={saveCard}
+            text={item.text}>
+            </RelationalCard>
+          );
         })}
         
         <div className="add-container">

@@ -1,31 +1,59 @@
 .rel-card {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr auto;
+    grid-template-areas: 
+    "text graph"
+    "button button";
+    justify-content: center;
     width: 80%;
-    background-color: var(--secondary-300);
+    background-color: var(--sec-3);
     padding: 1em;
     border: none;
     border-radius: 1em;
     gap: 1em;
     box-shadow: var(--s-shine);
-    background: linear-gradient(var(--high-light), var(--low-light));
 
     > legend {
-        color: var(--text-800);
+        color: var(--text-main);
     }
 }
 
 .rel-card-text-wrapper {
-    background-color: var(--primary-100);
+    grid-area: "text";
+    max-width: 600px;
+    background-color: var(--prim-3);
     border-radius: 1em;
     padding: 0.2em 1em;
     box-shadow: var(--s-shine);
 }
 
+.rel-card-graph-wrapper {
+    grid-area: "graph";
+}
+
 .rel-card-text {
-    color: var(--text-800);
+    font-family: 'Bree Serif';
+    color: var(--text-subsec);
     height: 9.5em;
     overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--text-600) var(--primary-100);
+    scrollbar-color: var(--text-subsec) var(--prim-3);
+}
+
+.save-rel-card-button {
+    grid-area: "button";
+    font-family: 'Bree Serif';
+    font-size: 1.2em;
+    background-color: var(--prim-2);
+    border-color: var(--bg-3);
+    height: fit-content;
+    padding: 0.5em;
+    border-radius: 0.5em;
+
+    color: var(--text-subsec);
+
+    &:hover {
+        background-color: var(--highlight);
+        cursor: pointer;
+    }
 }

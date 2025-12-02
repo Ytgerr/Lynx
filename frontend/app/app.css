@@ -85,6 +85,30 @@
 
   --graph-background: hsl(0, 0, 95%);
 
+  --main-color: 200;
+  --acc-color: 50;
+
+  --bg-1: hsl(var(--main-color), 30%, 35%);
+  --bg-2: hsl(var(--main-color), 30%, 45%);
+  --bg-3: hsl(var(--main-color), 30%, 65%);
+
+  --sec-1: hsl(var(--main-color), 40%, 75%);
+  --sec-2: hsl(var(--main-color), 44%, 79%);
+  --sec-3: hsl(var(--main-color), 48%, 83%);
+
+  --prim-1: hsl(var(--main-color), 50%, 86%);
+  --prim-2: hsl(var(--main-color), 54%, 90%);
+  --prim-3: hsl(var(--main-color), 54%, 95%);
+
+  --highlight: hsl(var(--main-color), 54%, 95%);
+
+  --acc-1: hsl(var(--acc-color), 60%, 86%);
+  --acc-2: hsl(var(--acc-color), 60%, 90%);
+  --acc-3: hsl(var(--acc-color), 60%, 95%);
+
+  --text-main: hsl(var(--main-color), 30%, 20%);
+  --text-subsec: hsl(var(--main-color), 30%, 30%);
+  --text-desc: hsl(var(--main-color), 30%, 50%);
 }
 
 :root[data-theme="dark"] {
@@ -151,26 +175,53 @@
   --high-light: var(--secondary-400);
   --low-light: var(--secondary-300);
 
-  --s-shine: 
-  inset 0 1px 1px var(--accent-950),
-  0 1px 2px var(--accent-100),
-  0 2px 4px var(--accent-50);
-
-  --m-shine: 
-  inset 0 2px 2px var(--accent-950),
-  0 2px 3px var(--accent-100),
-  0 3px 5px var(--accent-50);
-
-  --l-shine: 
-  inset 0 3px 3px var(--accent-950),
-  0 3px 4px var(--accent-100),
-  0 4px 6px var(--accent-50);
+  
 
   --theme-button-clr: hsl(56, 86%, 49%);
 
   --icon-color: 100%;
 
   --graph-background: hsl(0, 0%, 90%);
+
+  --main-color: 200;
+  --acc-color: 50;
+
+  --bg-1: hsl(var(--main-color), 25%, 8%);
+  --bg-2: hsl(var(--main-color), 25%, 12%);
+  --bg-3: hsl(var(--main-color), 25%, 15%);
+
+  --sec-1: hsl(var(--main-color), 20%, 20%);
+  --sec-2: hsl(var(--main-color), 20%, 25%);
+  --sec-3: hsl(var(--main-color), 20%, 30%);
+
+  --prim-1: hsl(var(--main-color), 50%, 35%);
+  --prim-2: hsl(var(--main-color), 54%, 40%);
+  --prim-3: hsl(var(--main-color), 54%, 42%);
+
+  --highlight: hsl(var(--main-color), 60%, 58%);
+
+  --acc-1: hsl(var(--acc-color), 60%, 40%);
+  --acc-2: hsl(var(--acc-color), 60%, 50%);
+  --acc-3: hsl(var(--acc-color), 60%, 60%);
+
+  --text-main: hsl(var(--main-color), 30%, 90%);
+  --text-subsec: hsl(var(--main-color), 30%, 85%);
+  --text-desc: hsl(var(--main-color), 30%, 75%);
+
+  --s-shine: 
+  inset 0 1px 1px hsl(var(--main-color), 54%, 80%),
+  0 1px 2px var(--bg-2),
+  0 2px 4px var(--bg-1);
+
+  --m-shine: 
+  inset 0 2px 2px hsl(var(--main-color), 54%, 80%),
+  0 2px 3px var(--bg-2),
+  0 3px 5px var(--bg-1);
+
+  --l-shine: 
+  inset 0 3px 3px hsl(var(--main-color), 54%, 80%),
+  0 3px 4px var(--bg-2),
+  0 4px 6px var(--bg-1);
 
 }
 
@@ -209,7 +260,7 @@ body {
   font-family: 'Bree Serif';
   font-weight: 400;
 
-  background-color: var(--background-100);
+  background-color: var(--bg-3);
 
   display: flex;
   flex-direction: column;

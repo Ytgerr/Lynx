@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
+import HistoryPage from '~/historypage/historypage';
 
-class History extends Component {
-    render() {
-        return (
-            <div>
-                <h1>Here your history</h1>
-            </div>
-        );
-    }
+export default function Home() {
+  return <HistoryPage />;
 }
-
-export default History;

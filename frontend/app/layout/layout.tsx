@@ -47,7 +47,7 @@ export default function MainLayout() {
                             >
                                 <NavLink to="/"><img src={home_icon}/>Home Page</NavLink>
                                 <NavLink to="/history"><img src={history_icon}/>History</NavLink>
-                                <NavLink to="/profile"><img src={profile_icon}/>Profile</NavLink>
+                                {/* <NavLink to="/profile"><img src={profile_icon}/>Profile</NavLink> */}
                             </div>
                             <ThemeToggle />
                             <img onClick={shrinkLayout} src={isShrinked? expand_icon : shrink_icon}/>
@@ -57,7 +57,7 @@ export default function MainLayout() {
                         <div className="links"> 
                             <NavLink to="/"><img src={home_icon}/></NavLink>
                             <NavLink to="/history"><img src={history_icon}/></NavLink>
-                            <NavLink to="/profile"><img src={profile_icon}/></NavLink>
+                            {/* <NavLink to="/profile"><img src={profile_icon}/></NavLink> */}
                         </div>
                         <ThemeToggle />
                         <img onClick={shrinkLayout} src={isShrinked? expand_icon : shrink_icon}/>
@@ -73,7 +73,7 @@ export default function MainLayout() {
             </main>
 
             <footer>
-                Some footer content
+                <span>© 2025 Lynx. Pupupu Inc.</span>
             </footer>
         </div>
     )
